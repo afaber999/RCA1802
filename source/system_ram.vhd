@@ -4,10 +4,10 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity sync_ram is
+entity system_ram is
 	generic
 	(
-		g_address_width	: integer := 8;
+		g_address_width	: integer := 12;
 		g_data_width	  : integer := 8
 	);
 	port
@@ -19,11 +19,30 @@ entity sync_ram is
 		i_we	          : in  std_logic;
   	o_data_out     	: out std_logic_vector(g_data_width - 1 downto 0)
 	);
-end sync_ram;
+end system_ram;
 
-architecture rtl of sync_ram is
-	type ram is array(0 to 2 ** g_address_width - 1) of std_logic_vector(g_data_width - 1 downto 0);
-	signal ram_block : ram;
+
+architecture rtl of system_ram is
+
+	type t_ram is array(0 to 2 ** g_address_width - 1) of std_logic_vector(g_data_width - 1 downto 0);
+
+	function program_1 return t_ram is
+		variable temp : t_ram;
+		-- other variables
+	begin
+		for i in t_ram'range loop
+			temp(i) := x"FF";
+	 	end loop;
+		temp(0) := x"AA";
+		temp(1) := x"AB";
+		temp(2) := x"AC";
+		temp(3) := x"AD";
+		
+		return temp;
+
+	end function;
+
+  signal ram_block : t_ram := program_1;
 begin
 
 	process (i_clk)

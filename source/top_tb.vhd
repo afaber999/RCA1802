@@ -11,7 +11,7 @@ architecture sim of Top_TB is
 	constant c_ClkFrequency : integer := 10000000;
 	constant c_ClkPeriod    : time    := 1 sec / c_ClkFrequency;
 
-	signal clk           : std_logic := '1';
+	signal r_clk           : std_logic := '1';
 	signal RS232_TCX_TTL : std_logic;
 
 begin
@@ -21,11 +21,11 @@ begin
 		G_CLKFREQUENCY => c_ClkFrequency
 	)
 	port map (		
-		clk           => clk
+		i_clk => r_clk
 	);
 	
 	-- clock generator	
-	clk <= not Clk after c_ClkPeriod / 2;
+	r_clk <= not r_clk after c_ClkPeriod / 2;
 	
 	-- Testbench sequence
 	process is 

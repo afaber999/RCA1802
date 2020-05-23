@@ -12,7 +12,7 @@ entity Top is
 		G_CLKFREQUENCY : integer := 12000000
 	);
 	port (
-    clk  : in  std_logic
+    i_clk  : in  std_logic
 	);
 
 end entity;
@@ -20,6 +20,11 @@ end entity;
 architecture rtl of Top is
 
 begin
+
+	INST_Datapath : entity work.Datapath(rtl)
+	port map (		
+		i_clk => i_clk
+	);
 
 end architecture;
 
